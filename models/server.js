@@ -9,6 +9,8 @@ const { orderRouter } = require('../routes/order.routes');
 const initModel = require('./initModel');
 const { db } = require('../database/db');
 const globalErrorHandler = require('../controllers/error.controller');
+const AppError = require('../utils/appError');
+const { authRouter } = require('../routes/auth.routes');
 
 
 
@@ -45,6 +47,7 @@ class Server {
         }
 
         routes(){
+            //this.app.use(this.paths.auth, authRouter);
             this.app.use(this.paths.user, userRouter);
             this.app.use(this.paths.restaurant, restaurantRouter);
             this.app.use(this.paths.meals, mealRouter);

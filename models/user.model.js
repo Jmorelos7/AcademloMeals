@@ -25,7 +25,7 @@ password: {
 role: {
     type: DataTypes.ENUM('normal', 'admin'),
     allowNull: false,
-    defaultValue: 'normal',
+    defaultValue: 'admin',
 },
 status: {
     type: DataTypes.BOOLEAN,

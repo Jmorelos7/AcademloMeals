@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const catchAsync = require('../utils/catchAsync');
+const generateJWT = require('../utils/jwt');
 
 
 exports.signup = catchAsync(async (req, res, next) => {

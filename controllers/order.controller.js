@@ -1,3 +1,6 @@
+const Meal = require("../models/meal.model");
+const Order = require("../models/order.model");
+const User = require("../models/user.model");
 const catchAsync = require("../utils/catchAsync");
 
 
@@ -13,10 +16,10 @@ exports.getOrderByUser = catchAsync(async(req, res, next) => {
       },
       include: [
         {
-          model: Orders,
+          model: Order,
           include: [
             {
-              model: Meals,
+              model: Meal,
               include: [
                 {
                   model: Restaurants
@@ -37,47 +40,38 @@ exports.getOrderByUser = catchAsync(async(req, res, next) => {
   
   exports.newOrder = catchAsync(async(req, res, next) => {
   
-    const {quantity, mealId, userId, totalPrice} = req.body;
+    const {quantity, mealId} = req.body;
+    const {sessionUser} = req;
   
     const findMeal = await Meal.findOne({
       where: {
         id: mealId,
+        status: true
       },
     });
-  
-  
-  
+    
   if(!findMeal){
       return next(new AppError('The meal could not found'))
     };
+
+    const totalPrice = findMeal.price * quantity;
   
-    const newOrder = await Orders.create({
+    const newOrder = await Order.create({
       quantity,
-      mealId,
-      userId,
+      mealId: findMeal.id,
+      userId: sessionUser.id,
       totalPrice
     });
   
-    const qty = newOrder.quantity
-    const price = findMeal.price
-    const total = qty * price
-  
-    const orderCompleted = await Orders.create({
-      
-      totalPrice: total,
-      mealId: newOrder.mealId,
-      quantity: newOrder.quantity,
-      userId: newOrder.userId
-    })
     
     res.status(200).json({
       status: 'success',
       message: 'Order completed',
-      orderCompleted: {
-        id: orderCompleted.id,
-        totalPrice: orderCompleted.totalPrice,
-        mealId: orderCompleted.mealId,
-        quantity: orderCompleted.quantity
+      newOrder: {
+        id: newOrder.id,
+        totalPrice: newOrder.totalPrice,
+        mealId: newOrder.mealId,
+        quantity: newOrder.quantity
       }
       
       
@@ -89,7 +83,7 @@ exports.getOrderByUser = catchAsync(async(req, res, next) => {
   
     const {id} = req.params;
   
-    const findOrder = await Orders.findOne({
+    const findOrder = await Order.findOne({
       where: {
         id,
         status: 'active'

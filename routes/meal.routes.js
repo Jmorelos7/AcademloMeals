@@ -7,11 +7,12 @@ const { validateFields } = require('../middlewares/validations.middlewares');
 
 const router = Router();
 
-router.post('/:id',[ 
+router.post('/',[ 
 check('name', 'The name most be mandatory').not().isEmpty(),
 check('price', 'The price most be mandatory').not().isEmpty(),
 check('price', 'The price most be s correct format').isNumeric(),
-], validateFields, protect, restrictTo('admin'), newMeal)
+validateFields,
+],  protect, restrictTo('admin'), newMeal)
 
 router.get('/', getMeal)
 

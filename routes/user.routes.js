@@ -11,7 +11,9 @@ router.post('/signup', signupValidations, validateFields, signup);
 
 router.post(
     '/login',
-    //loginValidations,
+    check('email', 'The email must be mandatory').not().isEmpty(),
+    check('email', 'The email must be a correct format').isEmail(),
+    check('password', 'The password must be mandatory').not().isEmpty(),
     validateFields,
     validUserByEmail,
     validPassword,

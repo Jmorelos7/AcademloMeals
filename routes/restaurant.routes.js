@@ -24,7 +24,7 @@ router.delete('/:id', deleteRestaurant)
 
 router.post('/reviews/:id', createReviewValidation, validateFields, validExistRestaurant, createReview)
 
-router.patch('/reviews/:restauranId/:id', 
+router.patch('/reviews/:restaurantId/:id', 
 createReviewValidation, 
 validateFields, 
 validExistRestaurantId, 
@@ -32,7 +32,7 @@ validExistReview,
 protectAccountOwner, 
 updateReview)
 
-router.delete('/reviews/:restauranId/:id', protect, deleteReview)
+router.delete('/reviews/:restaurantId/:id', protect, deleteReview)
 
 module.exports = {
     restaurantRouter: router,

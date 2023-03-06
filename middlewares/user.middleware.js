@@ -3,6 +3,8 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
+const {promisify} = require('util');
+const jwt = require('jsonwebtoken');
 
 
 exports.validUserByEmail = catchAsync(async (req, res, next) => {
@@ -20,7 +22,7 @@ if(!user){
     return next(new AppError('The user is not registred'), 401);
 }
 
-red.user = user;
+req.user = user;
 next();
 
 });

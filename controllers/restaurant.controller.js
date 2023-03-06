@@ -31,7 +31,7 @@ exports.findRestaurants = catchAsync(async(req, res, next) => {
      
     res.status(200).json({
         status: 'success',
-        restaurants,
+        restaurant,
     })
 
 })
@@ -77,7 +77,7 @@ exports.getRestaurantById = catchAsync( async(req, res, next) => {
     const findRestaurant = await Restaurant.findOne({
         where: {
             id,
-            status: 'success'
+            status: true,
         },
         include: [
             {
@@ -90,7 +90,7 @@ exports.getRestaurantById = catchAsync( async(req, res, next) => {
     res.status(200).json({
         status: 'success',
         message: 'Restaurant found succefully',
-
+        findRestaurant,
     })
 })
 
@@ -115,7 +115,8 @@ exports.updateRestaurant = catchAsync( async(req, res, next) => {
 
    const upInfoRestauran = await findRestaurant.update({
     name,
-    addres
+    address,
+    
    })
 
       
@@ -134,7 +135,7 @@ exports.deleteRestaurant = catchAsync( async(req, res, next) => {
     const findRestaurant = await Restaurant.findOne({
         where: {
             id,
-            status: 'success'
+            status: true,
         }
 
     })

@@ -1,3 +1,5 @@
+const Meal = require("../models/meal.model");
+const Restaurant = require("../models/restaurant.model");
 const catchAsync = require("../utils/catchAsync")
 
 
@@ -6,7 +8,7 @@ exports.newMeal = catchAsync( async(req, res, next) => {
     const {name, price, restaurantId } = req.body;
   
 
-  const newMeal = await Meals.create({
+  const newMeal = await Meal.create({
     restaurantId,
     name,
     price,
@@ -29,7 +31,7 @@ exports.getMeal = catchAsync( async(req, res, next) => {
         },
         include: [
           {
-            model: Restaurants
+            model: Restaurant
           }
         ]
       });
@@ -54,7 +56,7 @@ exports.getMealById = catchAsync( async(req, res, next) => {
       },
       include: [
         {
-          model: Restaurants
+          model: Restaurant,
         }
       ]
     });
@@ -78,7 +80,7 @@ exports.updateMeal = catchAsync( async(req, res, next) => {
     const {id} = req.params;
     const {name, price} = req.body;
   
-    const findMeal = await Meals.findOne({
+    const findMeal = await Meal.findOne({
       where: {
         id,
         status: true
@@ -116,7 +118,7 @@ exports.deleteMeal = catchAsync( async(req, res, next) => {
       return next(new AppError('The meal could not found'))
     };
   
-    const eliminateMeal = await findMeal.update({status: false})
+    const deleteMeal = await findMeal.update({status: false})
   
     res.status(200).json({
       status: 'success',

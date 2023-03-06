@@ -14,13 +14,13 @@ exports.signupValidations = [
     check('name', 'The name is required').not().isEmpty(),
     check('email', 'The email is required').not().isEmpty(),
     check('email', 'The email must have a correct format').not().isEmpty(),
-    check('Password', 'Password is required').not().isEmpty(),
+    check('password', 'Password is required').not().isEmpty(),
 ]
 
 exports.loginValidation = [
     check('email', 'The email is required').not().isEmpty(),
     check('email', 'The email must have a correct format').not().isEmpty(),
-    check('Password', 'Password is required').not().isEmpty(),
+    check('password', 'Password is required').not().isEmpty(),
 ]
 
 exports.updateUserValidation = [
